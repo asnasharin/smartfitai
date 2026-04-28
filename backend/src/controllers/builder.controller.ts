@@ -2,13 +2,19 @@ import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { PDFDocument, StandardFonts } from "pdf-lib";
 import Resume from "../models/resume.model";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 interface CustomRequest extends Request {
   user?: any;
 }
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-3-flash-preview",
+});
 
 const formatInputForPrompt = (data: any): string => {
   let promptData = ``;
@@ -53,6 +59,7 @@ ${data.personalInfo?.linkedin ? `LinkedIn: ${data.personalInfo.linkedin}` : ""}
   return promptData;
 };
 
+
 export const generateResume = async (req: CustomRequest, res: Response) => {
   try {
     if (!req.user) {
@@ -69,11 +76,9 @@ export const generateResume = async (req: CustomRequest, res: Response) => {
     const formattedInput = formatInputForPrompt(inputData);
 
     const prompt = `
-Generate a professional resume based on this data:
+Generate a professional, ATS-friendly resume.
 
 ${formattedInput}
-
-Make it clean, structured, and ATS-friendly.
 `;
 
     const result = await model.generateContent(prompt);
@@ -91,14 +96,18 @@ Make it clean, structured, and ATS-friendly.
       generatedText,
     });
 
-  } catch (error) {
-    console.error("Generate Error:", error);
-    res.status(500).json({ message: "Failed to generate resume" });
+  } catch (error: any) {
+    console.error("Generate Error:", error?.message || error);
+    res.status(500).json({
+      message: "Failed to generate resume",
+      error: error?.message,
+    });
   }
 };
 
-
-
+//
+// ====================== DOWNLOAD PDF ======================
+//
 export const downloadGeneratedResume = async (req: CustomRequest, res: Response) => {
   try {
     const { id } = req.params;
@@ -141,7 +150,9 @@ export const downloadGeneratedResume = async (req: CustomRequest, res: Response)
   }
 };
 
-
+//
+// ====================== GET ALL RESUMES ======================
+//
 export const getGeneratedResumes = async (req: CustomRequest, res: Response) => {
   try {
     const resumes = await Resume.find({ userId: req.user.id })
@@ -162,7 +173,9 @@ export const getGeneratedResumes = async (req: CustomRequest, res: Response) => 
   }
 };
 
-
+//
+// ====================== GET BY ID ======================
+//
 export const getResumeById = async (req: CustomRequest, res: Response) => {
   try {
     const { id } = req.params;
@@ -184,7 +197,9 @@ export const getResumeById = async (req: CustomRequest, res: Response) => {
   }
 };
 
-
+//
+// ====================== DELETE ======================
+//
 export const deleteResume = async (req: CustomRequest, res: Response) => {
   try {
     const { id } = req.params;
