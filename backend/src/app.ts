@@ -8,6 +8,7 @@ import builderRoutes from "./routes/builder.Routes";
 import coverletterRoutes from "./routes/coverLetter.Routes";
 import matchRoutes from "./routes/match.Route";
 import resumeRoutes from "./routes/resume.Routes";
+import tipRoutes from "./routes/tip.Routes";
 
 dotenv.config();
 const app = express();
@@ -26,6 +27,7 @@ app.use("/api/builder", builderRoutes);
 app.use("/api/coverletter", coverletterRoutes);
 app.use("/api/match", matchRoutes);
 app.use("/api/resume", resumeRoutes);
+app.use("/api/tips", tipRoutes)
 
 app.get("/", (req, res) => {
   res.send("Server running");
