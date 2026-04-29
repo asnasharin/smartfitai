@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import Resume from "../models/resume.model";
+import Resume from "../models/builder.model";
 import CoverLetter from "../models/coverLetter.model";
 
 interface CustomRequest extends Request {
