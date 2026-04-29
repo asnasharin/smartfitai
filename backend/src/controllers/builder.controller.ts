@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { PDFDocument, StandardFonts } from "pdf-lib";
-import Resume from "../models/resume.model";
+import Resume from "../models/builder.model";
 import dotenv from "dotenv";
 
 dotenv.config();

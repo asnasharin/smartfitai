@@ -1,22 +1,28 @@
 import mongoose from "mongoose";
 
-const resumeSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const ResumeSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    originalFilename: String,
+    parsedText: String,
+
+    analysis: {
+      overallScore: Number,
+      categoryScores: {
+        formatting: Number,
+        content: Number,
+        keywords: Number,
+        impact: Number,
+      },
+      suggestions: [String],
+      strengths: [String],
+      analysisTimestamp: Date,
+    },
   },
+  { timestamps: true }
+);
 
-  inputData: {
-    type: Object,
-    required: true,
-  },
-
-  generatedText: {
-    type: String,
-    required: true,
-  },
-
-}, { timestamps: true });
-
-export default mongoose.model("Resume", resumeSchema);
+export default mongoose.model("Resume", ResumeSchema);
