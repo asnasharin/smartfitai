@@ -9,9 +9,9 @@ import {
 const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.post("/upload", upload.single("resume"), uploadResume);
+router.post("/upload", upload.single("resumeFile"), uploadResume);
 
-router.post("/analyze/:resumeId", analyzeResume);
+router.post("/:resumeId/analyze", analyzeResume);
 
 router.get("/", getUploadedResumes);
 
