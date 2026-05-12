@@ -26,7 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/builder", builderRoutes);
 app.use("/api/coverletter", coverletterRoutes);
 app.use("/api/match", matchRoutes);
-app.use("/api/resume", resumeRoutes);
+app.use("/api/resumes", resumeRoutes);
 app.use("/api/tips", tipRoutes)
 
 app.get("/", (req, res) => {

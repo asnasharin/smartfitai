@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Resume from "../models/builder.model";
 import Match from "../models/match.model";
-import * as pdfParse from "pdf-parse";
+import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
 
 interface CustomRequest extends Request {
