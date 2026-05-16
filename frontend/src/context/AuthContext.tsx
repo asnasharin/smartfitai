@@ -27,19 +27,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-
-  // useEffect(() => {
-  //   const storedToken = localStorage.getItem("token");
-  //   const storedUser = localStorage.getItem("user");
-
-  //   if (storedToken && storedUser) {
-  //     setToken(storedToken);
-  //     setUser(JSON.parse(storedUser));
-  //   }
-
-  //   setIsLoading(false);
-  // }, []);
-
   useEffect(() => {
   const storedToken = localStorage.getItem("token");
   const storedUser = localStorage.getItem("user");
