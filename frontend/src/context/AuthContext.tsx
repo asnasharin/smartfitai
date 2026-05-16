@@ -4,6 +4,8 @@ interface User {
   _id: string;
   email: string;
   name?: string;
+  displayName?: string;
+  photoURL?: string;
 }
 
 interface AuthContextType {
